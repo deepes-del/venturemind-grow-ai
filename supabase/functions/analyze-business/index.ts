@@ -108,39 +108,23 @@ Please analyze this data and provide insights and marketing content.`;
 
     if (insightError) throw insightError;
 
-    // Store and post ad content
+    // Store ad content as draft for user approval
     if (instagramPost) {
-      const { data: adData } = await supabase.from("ad_content").insert({
+      await supabase.from("ad_content").insert({
         user_id: user.id,
         platform: "instagram",
         ad_text: instagramPost,
-        status: profile?.instagram_api_key ? "posted" : "draft",
-        posted_at: profile?.instagram_api_key ? new Date().toISOString() : null,
-      }).select().single();
-
-      // Post to Instagram if API key is available
-      if (profile?.instagram_api_key && adData) {
-        console.log("Posting to Instagram:", instagramPost);
-        // TODO: Implement Instagram API posting
-        // This would require Instagram Graph API integration
-      }
+        status: "draft",
+      });
     }
 
     if (linkedinPost) {
-      const { data: adData } = await supabase.from("ad_content").insert({
+      await supabase.from("ad_content").insert({
         user_id: user.id,
         platform: "linkedin",
         ad_text: linkedinPost,
-        status: profile?.linkedin_api_key ? "posted" : "draft",
-        posted_at: profile?.linkedin_api_key ? new Date().toISOString() : null,
-      }).select().single();
-
-      // Post to LinkedIn if API key is available
-      if (profile?.linkedin_api_key && adData) {
-        console.log("Posting to LinkedIn:", linkedinPost);
-        // TODO: Implement LinkedIn API posting
-        // This would require LinkedIn Marketing API integration
-      }
+        status: "draft",
+      });
     }
 
     return new Response(

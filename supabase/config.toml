@@ -1,1 +1,10 @@
 project_id = "rbyyvizqwdaeujfubpbn"
+
+[functions.analyze-business]
+verify_jwt = true
+
+[functions.post-to-linkedin]
+verify_jwt = true
+
+[functions.post-to-instagram]
+verify_jwt = true

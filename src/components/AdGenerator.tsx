@@ -42,17 +42,25 @@ const AdGenerator = ({ userId }: AdGeneratorProps) => {
     setLoading(false);
   };
 
-  const handleApprove = async (adId: string) => {
-    const { error } = await supabase
-      .from("ad_content")
-      .update({ status: "approved" })
-      .eq("id", adId);
+  const handleApprove = async (adId: string, platform: string) => {
+    try {
+      toast.loading(`Posting to ${platform}...`);
+      
+      const functionName = platform === "instagram" ? "post-to-instagram" : "post-to-linkedin";
+      
+      const { data, error } = await supabase.functions.invoke(functionName, {
+        body: { adId }
+      });
 
-    if (error) {
-      toast.error("Failed to approve ad");
-    } else {
-      toast.success("Ad approved!");
-      fetchAds();
+      if (error) {
+        toast.error(`Failed to post to ${platform}: ${error.message}`);
+      } else {
+        toast.success(`Successfully posted to ${platform}!`);
+        fetchAds();
+      }
+    } catch (error) {
+      console.error("Error posting:", error);
+      toast.error("An error occurred while posting");
     }
   };
 
@@ -121,9 +129,9 @@ const AdGenerator = ({ userId }: AdGeneratorProps) => {
               <p className="whitespace-pre-wrap text-sm leading-relaxed">{ad.ad_text}</p>
             </div>
             {ad.status === "draft" && (
-              <Button onClick={() => handleApprove(ad.id)} variant="hero" className="w-full">
+              <Button onClick={() => handleApprove(ad.id, ad.platform)} variant="hero" className="w-full">
                 <Check className="h-4 w-4 mr-2" />
-                Approve Post
+                Approve & Post to {ad.platform === "instagram" ? "Instagram" : "LinkedIn"}
               </Button>
             )}
           </CardContent>
