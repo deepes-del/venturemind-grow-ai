@@ -10,6 +10,7 @@ import { LogOut, Upload, Sparkles, TrendingUp, FileText } from "lucide-react";
 import UploadDataset from "@/components/UploadDataset";
 import BusinessInsights from "@/components/BusinessInsights";
 import AdGenerator from "@/components/AdGenerator";
+import DatasetHistory from "@/components/DatasetHistory";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -72,13 +73,13 @@ const Dashboard = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary/5 via-background to-accent/5">
-      <nav className="border-b bg-card/50 backdrop-blur-sm sticky top-0 z-10">
+    <div className="min-h-screen relative" style={{ background: 'var(--gradient-mesh), linear-gradient(to bottom right, hsl(var(--background)), hsl(var(--background)))' }}>
+      <nav className="border-b glass-effect sticky top-0 z-10 shadow-lg">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Sparkles className="h-6 w-6 text-primary" />
-            <h1 className="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-              Lovble
+            <Sparkles className="h-6 w-6 text-primary animate-float" />
+            <h1 className="text-2xl font-bold bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent animate-gradient">
+              AutoGrow
             </h1>
           </div>
           <div className="flex items-center gap-4">
@@ -94,15 +95,17 @@ const Dashboard = () => {
       </nav>
 
       <main className="container mx-auto px-4 py-8">
-        <div className="mb-8">
-          <h2 className="text-3xl font-bold mb-2">Welcome back, {profile?.owner_name}! 👋</h2>
-          <p className="text-muted-foreground">
+        <div className="mb-8 animate-slide-in-up">
+          <h2 className="text-4xl font-bold mb-2 bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
+            Welcome back, {profile?.owner_name}! 👋
+          </h2>
+          <p className="text-muted-foreground text-lg">
             Let's analyze your business data and grow your presence on social media
           </p>
         </div>
 
         <Tabs defaultValue="upload" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-3 max-w-2xl">
+          <TabsList className="grid w-full grid-cols-4 max-w-3xl glass-effect shadow-xl">
             <TabsTrigger value="upload" className="gap-2">
               <Upload className="h-4 w-4" />
               Upload Data
@@ -115,18 +118,39 @@ const Dashboard = () => {
               <FileText className="h-4 w-4" />
               Ad Content
             </TabsTrigger>
+            <TabsTrigger value="history" className="gap-2">
+              <FileText className="h-4 w-4" />
+              History
+            </TabsTrigger>
           </TabsList>
 
-          <TabsContent value="upload" className="space-y-4">
+          <TabsContent value="upload" className="space-y-4 animate-scale-in">
             <UploadDataset userId={user?.id || ""} />
           </TabsContent>
 
-          <TabsContent value="insights" className="space-y-4">
+          <TabsContent value="insights" className="space-y-4 animate-scale-in">
             <BusinessInsights userId={user?.id || ""} />
           </TabsContent>
 
-          <TabsContent value="ads" className="space-y-4">
+          <TabsContent value="ads" className="space-y-4 animate-scale-in">
             <AdGenerator userId={user?.id || ""} />
+          </TabsContent>
+
+          <TabsContent value="history" className="space-y-4 animate-scale-in">
+            <Card className="border-l-4 border-l-accent shadow-xl">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <FileText className="h-5 w-5 text-accent" />
+                  Dataset History
+                </CardTitle>
+                <CardDescription>
+                  View all your uploaded datasets and analysis history
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <DatasetHistory userId={user?.id || ""} />
+              </CardContent>
+            </Card>
           </TabsContent>
         </Tabs>
       </main>

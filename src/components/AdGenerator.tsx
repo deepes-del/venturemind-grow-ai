@@ -96,8 +96,12 @@ const AdGenerator = ({ userId }: AdGeneratorProps) => {
 
   return (
     <div className="space-y-4">
-      {ads.map((ad) => (
-        <Card key={ad.id}>
+      {ads.map((ad, index) => (
+        <Card 
+          key={ad.id}
+          className="shadow-xl hover:shadow-2xl transition-all duration-300 animate-slide-in-up"
+          style={{ animationDelay: `${index * 0.1}s` }}
+        >
           <CardHeader>
             <div className="flex items-start justify-between">
               <div className="flex items-center gap-2">

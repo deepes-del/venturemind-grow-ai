@@ -77,7 +77,7 @@ const UploadDataset = ({ userId }: UploadDatasetProps) => {
   };
 
   return (
-    <Card>
+    <Card className="shadow-xl border-2">
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Upload className="h-5 w-5" />

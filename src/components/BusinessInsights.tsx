@@ -65,8 +65,12 @@ const BusinessInsights = ({ userId }: BusinessInsightsProps) => {
 
   return (
     <div className="space-y-4">
-      {insights.map((insight) => (
-        <Card key={insight.id} className="border-l-4 border-l-primary">
+      {insights.map((insight, index) => (
+        <Card 
+          key={insight.id} 
+          className="border-l-4 border-l-primary shadow-xl hover:shadow-2xl transition-all duration-300 animate-slide-in-up"
+          style={{ animationDelay: `${index * 0.1}s` }}
+        >
           <CardHeader>
             <div className="flex items-start justify-between">
               <div className="flex items-center gap-2">
