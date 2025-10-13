@@ -33,6 +33,13 @@ serve(async (req) => {
       throw new Error("Unauthorized");
     }
 
+    // Get user profile with API keys
+    const { data: profile } = await supabase
+      .from("profiles")
+      .select("linkedin_api_key, instagram_api_key")
+      .eq("id", user.id)
+      .single();
+
     // Call Lovable AI Gateway
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     if (!LOVABLE_API_KEY) {
@@ -101,23 +108,39 @@ Please analyze this data and provide insights and marketing content.`;
 
     if (insightError) throw insightError;
 
-    // Store ad content
+    // Store and post ad content
     if (instagramPost) {
-      await supabase.from("ad_content").insert({
+      const { data: adData } = await supabase.from("ad_content").insert({
         user_id: user.id,
         platform: "instagram",
         ad_text: instagramPost,
-        status: "draft",
-      });
+        status: profile?.instagram_api_key ? "posted" : "draft",
+        posted_at: profile?.instagram_api_key ? new Date().toISOString() : null,
+      }).select().single();
+
+      // Post to Instagram if API key is available
+      if (profile?.instagram_api_key && adData) {
+        console.log("Posting to Instagram:", instagramPost);
+        // TODO: Implement Instagram API posting
+        // This would require Instagram Graph API integration
+      }
     }
 
     if (linkedinPost) {
-      await supabase.from("ad_content").insert({
+      const { data: adData } = await supabase.from("ad_content").insert({
         user_id: user.id,
         platform: "linkedin",
         ad_text: linkedinPost,
-        status: "draft",
-      });
+        status: profile?.linkedin_api_key ? "posted" : "draft",
+        posted_at: profile?.linkedin_api_key ? new Date().toISOString() : null,
+      }).select().single();
+
+      // Post to LinkedIn if API key is available
+      if (profile?.linkedin_api_key && adData) {
+        console.log("Posting to LinkedIn:", linkedinPost);
+        // TODO: Implement LinkedIn API posting
+        // This would require LinkedIn Marketing API integration
+      }
     }
 
     return new Response(

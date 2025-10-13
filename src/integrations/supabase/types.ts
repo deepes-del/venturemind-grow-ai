@@ -125,6 +125,8 @@ export type Database = {
           email: string
           id: string
           industry: string
+          instagram_api_key: string | null
+          linkedin_api_key: string | null
           owner_name: string
           updated_at: string
         }
@@ -135,6 +137,8 @@ export type Database = {
           email: string
           id: string
           industry: string
+          instagram_api_key?: string | null
+          linkedin_api_key?: string | null
           owner_name: string
           updated_at?: string
         }
@@ -145,6 +149,8 @@ export type Database = {
           email?: string
           id?: string
           industry?: string
+          instagram_api_key?: string | null
+          linkedin_api_key?: string | null
           owner_name?: string
           updated_at?: string
         }
