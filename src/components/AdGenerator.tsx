@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
-import { FileText, Instagram, Linkedin, Check } from "lucide-react";
+import { FileText } from "lucide-react";
 
 interface AdGeneratorProps {
   userId: string;
@@ -86,16 +86,9 @@ const AdGenerator = ({ userId }: AdGeneratorProps) => {
     );
   }
 
-  const getPlatformIcon = (platform: string) => {
-    if (platform === "instagram") {
-      return <Instagram className="h-4 w-4" />;
-    }
-    return <Linkedin className="h-4 w-4" />;
-  };
-
   const getStatusBadge = (status: string) => {
-    if (status === "approved") {
-      return <Badge className="bg-accent">Approved</Badge>;
+    if (status === "posted") {
+      return <Badge className="bg-accent">Posted</Badge>;
     }
     return <Badge variant="secondary">Draft</Badge>;
   };
@@ -110,10 +103,7 @@ const AdGenerator = ({ userId }: AdGeneratorProps) => {
         >
           <CardHeader>
             <div className="flex items-start justify-between">
-              <div className="flex items-center gap-2">
-                {getPlatformIcon(ad.platform)}
-                <CardTitle className="text-lg capitalize">{ad.platform} Post</CardTitle>
-              </div>
+              <CardTitle className="text-lg">Ad Content</CardTitle>
               <div className="flex items-center gap-2">
                 {getStatusBadge(ad.status)}
                 <Badge variant="outline">
@@ -128,8 +118,7 @@ const AdGenerator = ({ userId }: AdGeneratorProps) => {
             </div>
             {ad.status === "draft" && (
               <Button onClick={() => handleApprove(ad.id, ad.platform)} variant="hero" className="w-full">
-                <Check className="h-4 w-4 mr-2" />
-                Approve & Post
+                Post to Webhook
               </Button>
             )}
           </CardContent>
