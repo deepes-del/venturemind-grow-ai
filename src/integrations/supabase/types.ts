@@ -125,10 +125,9 @@ export type Database = {
           email: string
           id: string
           industry: string
-          instagram_api_key: string | null
-          linkedin_api_key: string | null
           owner_name: string
           updated_at: string
+          webhook_url: string | null
         }
         Insert: {
           business_description: string
@@ -137,10 +136,9 @@ export type Database = {
           email: string
           id: string
           industry: string
-          instagram_api_key?: string | null
-          linkedin_api_key?: string | null
           owner_name: string
           updated_at?: string
+          webhook_url?: string | null
         }
         Update: {
           business_description?: string
@@ -149,10 +147,9 @@ export type Database = {
           email?: string
           id?: string
           industry?: string
-          instagram_api_key?: string | null
-          linkedin_api_key?: string | null
           owner_name?: string
           updated_at?: string
+          webhook_url?: string | null
         }
         Relationships: []
       }

@@ -35,8 +35,7 @@ const Auth = () => {
     const ownerName = formData.get("owner-name") as string;
     const industry = formData.get("industry") as string;
     const businessDescription = formData.get("business-description") as string;
-    const linkedinApiKey = formData.get("linkedin-api-key") as string;
-    const instagramApiKey = formData.get("instagram-api-key") as string;
+    const webhookUrl = formData.get("webhook-url") as string;
 
     const { error } = await supabase.auth.signUp({
       email,
@@ -48,8 +47,7 @@ const Auth = () => {
           owner_name: ownerName,
           industry,
           business_description: businessDescription,
-          linkedin_api_key: linkedinApiKey,
-          instagram_api_key: instagramApiKey,
+          webhook_url: webhookUrl,
         },
       },
     });
@@ -212,25 +210,14 @@ const Auth = () => {
                       required
                     />
                   </div>
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="linkedin-api-key">LinkedIn API Key</Label>
-                      <Input
-                        id="linkedin-api-key"
-                        name="linkedin-api-key"
-                        type="text"
-                        placeholder="Your LinkedIn API key"
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="instagram-api-key">Instagram API Key</Label>
-                      <Input
-                        id="instagram-api-key"
-                        name="instagram-api-key"
-                        type="text"
-                        placeholder="Your Instagram API key"
-                      />
-                    </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="webhook-url">Webhook URL (Optional)</Label>
+                    <Input
+                      id="webhook-url"
+                      name="webhook-url"
+                      type="url"
+                      placeholder="http://localhost:5678/webhook-test/..."
+                    />
                   </div>
                   <Button type="submit" variant="hero" className="w-full" disabled={loading}>
                     {loading ? "Creating account..." : "Create Account"}

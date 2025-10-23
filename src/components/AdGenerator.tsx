@@ -44,18 +44,16 @@ const AdGenerator = ({ userId }: AdGeneratorProps) => {
 
   const handleApprove = async (adId: string, platform: string) => {
     try {
-      toast.loading(`Posting to ${platform}...`);
+      toast.loading("Posting to webhook...");
       
-      const functionName = platform === "instagram" ? "post-to-instagram" : "post-to-linkedin";
-      
-      const { data, error } = await supabase.functions.invoke(functionName, {
+      const { data, error } = await supabase.functions.invoke("post-to-webhook", {
         body: { adId }
       });
 
       if (error) {
-        toast.error(`Failed to post to ${platform}: ${error.message}`);
+        toast.error(`Failed to post: ${error.message}`);
       } else {
-        toast.success(`Successfully posted to ${platform}!`);
+        toast.success("Successfully posted to webhook!");
         fetchAds();
       }
     } catch (error) {
@@ -131,7 +129,7 @@ const AdGenerator = ({ userId }: AdGeneratorProps) => {
             {ad.status === "draft" && (
               <Button onClick={() => handleApprove(ad.id, ad.platform)} variant="hero" className="w-full">
                 <Check className="h-4 w-4 mr-2" />
-                Approve & Post to {ad.platform === "instagram" ? "Instagram" : "LinkedIn"}
+                Approve & Post
               </Button>
             )}
           </CardContent>
