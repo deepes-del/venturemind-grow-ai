@@ -18,7 +18,6 @@ const Index = () => {
         <div className="relative z-10 container mx-auto px-4 py-20 text-center text-white">
           <div className="flex items-center justify-center gap-3 mb-6">
             <Sparkles className="h-12 w-12 animate-pulse" />
-            <h1 className="text-6xl font-bold">Lovble</h1>
           </div>
           <h2 className="text-3xl md:text-5xl font-bold mb-6 max-w-4xl mx-auto leading-tight">
             Transform Your Business Data Into
@@ -48,7 +47,7 @@ const Index = () => {
               Everything You Need To <span className="text-primary">Grow Your Business</span>
             </h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Powered by Google Gemini AI, Lovble analyzes your data and creates compelling marketing content
+              Powered by Google Gemini AI to analyze your data and create compelling marketing content
             </p>
           </div>
 
@@ -144,7 +143,7 @@ const Index = () => {
       {/* Footer */}
       <footer className="bg-card border-t py-8">
         <div className="container mx-auto px-4 text-center text-muted-foreground">
-          <p>&copy; 2025 Lovble. AI-Powered Business Growth Platform.</p>
+          <p>&copy; 2025 AI-Powered Business Growth Platform.</p>
         </div>
       </footer>
     </div>
