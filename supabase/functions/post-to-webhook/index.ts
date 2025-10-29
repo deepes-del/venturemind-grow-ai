@@ -45,7 +45,9 @@ serve(async (req) => {
     // Slack webhook URL
     const slackWebhookUrl = "https://hooks.slack.com/services/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";
 
-    console.log(`Posting to Slack webhook`);
+    console.log(`Posting ad content to Slack webhook`);
+    console.log(`Platform: ${ad.platform}`);
+    console.log(`Ad text length: ${ad.ad_text.length}`);
 
     // Post to Slack webhook with correct format
     const webhookResponse = await fetch(slackWebhookUrl, {
@@ -57,6 +59,8 @@ serve(async (req) => {
         text: `*New Ad Campaign Posted*\n\n*Platform:* ${ad.platform}\n\n*Content:*\n${ad.ad_text}\n\n_Posted at: ${new Date().toISOString()}_`
       })
     });
+
+    console.log(`Webhook response status: ${webhookResponse.status}`);
 
     if (!webhookResponse.ok) {
       const errorText = await webhookResponse.text();
