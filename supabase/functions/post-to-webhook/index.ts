@@ -42,21 +42,24 @@ serve(async (req) => {
       throw new Error("Ad not found");
     }
 
-    // Slack webhook URL
-    const slackWebhookUrl = "https://hooks.slack.com/services/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";
+    // Telegram bot API URL
+    const telegramBotUrl = "https://api.telegram.org/bot8375850270:AAHgbGKyI4EtORCIoNb_EAtAAnADVFCsDdA/sendMessage";
+    const chatId = "1344744746";
 
-    console.log(`Posting ad content to Slack webhook`);
+    console.log(`Posting ad content to Telegram`);
     console.log(`Platform: ${ad.platform}`);
     console.log(`Ad text length: ${ad.ad_text.length}`);
 
-    // Post to Slack webhook with correct format
-    const webhookResponse = await fetch(slackWebhookUrl, {
+    // Post to Telegram with correct format
+    const webhookResponse = await fetch(telegramBotUrl, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        text: `*New Ad Campaign Posted*\n\n*Platform:* ${ad.platform}\n\n*Content:*\n${ad.ad_text}\n\n_Posted at: ${new Date().toISOString()}_`
+        chat_id: chatId,
+        text: `🚀 *New Ad Campaign Posted*\n\n*Platform:* ${ad.platform}\n\n*Content:*\n${ad.ad_text}\n\n_Posted at: ${new Date().toISOString()}_`,
+        parse_mode: "Markdown"
       })
     });
 
