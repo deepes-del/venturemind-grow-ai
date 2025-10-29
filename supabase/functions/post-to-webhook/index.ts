@@ -43,7 +43,7 @@ serve(async (req) => {
     }
 
     // Slack webhook URL
-    const slackWebhookUrl = "https://hooks.slack.com/services/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";
+    const slackWebhookUrl = "https://hooks.slack.com/services/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";
 
     console.log(`Posting ad content to Slack webhook`);
     console.log(`Platform: ${ad.platform}`);
