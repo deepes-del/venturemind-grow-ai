@@ -42,29 +42,19 @@ serve(async (req) => {
       throw new Error("Ad not found");
     }
 
-    // Get user's webhook URL
-    const { data: profile, error: profileError } = await supabase
-      .from("profiles")
-      .select("webhook_url")
-      .eq("id", user.id)
-      .single();
+    // Slack webhook URL
+    const slackWebhookUrl = "https://hooks.slack.com/services/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";
 
-    if (profileError || !profile?.webhook_url) {
-      throw new Error("Webhook URL not configured");
-    }
+    console.log(`Posting to Slack webhook`);
 
-    console.log(`Posting to webhook: ${profile.webhook_url}`);
-
-    // Post to webhook
-    const webhookResponse = await fetch(profile.webhook_url, {
+    // Post to Slack webhook with correct format
+    const webhookResponse = await fetch(slackWebhookUrl, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        platform: ad.platform,
-        content: ad.ad_text,
-        timestamp: new Date().toISOString(),
+        text: `*New Ad Campaign Posted*\n\n*Platform:* ${ad.platform}\n\n*Content:*\n${ad.ad_text}\n\n_Posted at: ${new Date().toISOString()}_`
       })
     });
 
