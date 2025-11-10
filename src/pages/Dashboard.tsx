@@ -11,6 +11,7 @@ import UploadDataset from "@/components/UploadDataset";
 import BusinessInsights from "@/components/BusinessInsights";
 import AdGenerator from "@/components/AdGenerator";
 import DatasetHistory from "@/components/DatasetHistory";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -82,7 +83,7 @@ const Dashboard = () => {
               AutoGrow
             </span>
           </div>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3">
             <div className="text-right">
               <p className="text-sm font-semibold" style={{ color: 'hsl(var(--heading-secondary))' }}>
                 {profile?.business_name}
@@ -91,6 +92,7 @@ const Dashboard = () => {
                 {profile?.owner_name}
               </p>
             </div>
+            <ThemeToggle />
             <Button variant="outline" size="sm" onClick={handleLogout} className="hover:bg-muted">
               <LogOut className="h-4 w-4 mr-2" />
               Logout

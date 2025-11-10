@@ -2,7 +2,9 @@ import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { TrendingUp, Lightbulb } from "lucide-react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { TrendingUp, Lightbulb, BarChart3 } from "lucide-react";
+import InsightsChart from "./InsightsChart";
 
 interface BusinessInsightsProps {
   userId: string;
@@ -64,37 +66,56 @@ const BusinessInsights = ({ userId }: BusinessInsightsProps) => {
   }
 
   return (
-    <div className="space-y-4">
-      {insights.map((insight, index) => (
-        <Card 
-          key={insight.id} 
-          className="border-l-4 border-l-primary shadow-xl hover:shadow-2xl transition-all duration-300 animate-slide-in-up"
-          style={{ animationDelay: `${index * 0.1}s` }}
-        >
-          <CardHeader>
-            <div className="flex items-start justify-between">
-              <div className="flex items-center gap-2">
-                <Lightbulb className="h-5 w-5 text-primary" />
-                <CardTitle className="text-lg">Business Growth Ideas</CardTitle>
+    <Tabs defaultValue="insights" className="space-y-6">
+      <TabsList className="bg-muted/50">
+        <TabsTrigger value="insights" className="gap-2">
+          <Lightbulb className="h-4 w-4" />
+          Insights
+        </TabsTrigger>
+        <TabsTrigger value="analytics" className="gap-2">
+          <BarChart3 className="h-4 w-4" />
+          Analytics
+        </TabsTrigger>
+      </TabsList>
+
+      <TabsContent value="insights" className="space-y-4">
+        {insights.map((insight, index) => (
+          <Card 
+            key={insight.id} 
+            className="border-l-4 border-l-primary shadow-sm hover:shadow-md transition-all duration-300 animate-slide-in-up"
+            style={{ animationDelay: `${index * 0.1}s` }}
+          >
+            <CardHeader>
+              <div className="flex items-start justify-between">
+                <div className="flex items-center gap-2">
+                  <Lightbulb className="h-5 w-5 text-primary" />
+                  <CardTitle className="text-lg" style={{ color: 'hsl(var(--heading-secondary))' }}>
+                    Business Growth Ideas
+                  </CardTitle>
+                </div>
+                <Badge variant="secondary">
+                  {new Date(insight.created_at).toLocaleDateString()}
+                </Badge>
               </div>
-              <Badge variant="secondary">
-                {new Date(insight.created_at).toLocaleDateString()}
-              </Badge>
-            </div>
-            <CardDescription className="text-base font-medium text-foreground mt-2">
-              Problem: {insight.problem_statement}
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="prose prose-sm max-w-none">
-              <div className="whitespace-pre-wrap text-sm leading-relaxed">
-                {insight.insights_text}
+              <CardDescription className="text-base font-medium mt-2">
+                Problem: {insight.problem_statement}
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="prose prose-sm max-w-none">
+                <div className="whitespace-pre-wrap text-sm leading-relaxed" style={{ color: 'hsl(var(--text-primary))' }}>
+                  {insight.insights_text}
+                </div>
               </div>
-            </div>
-          </CardContent>
-        </Card>
-      ))}
-    </div>
+            </CardContent>
+          </Card>
+        ))}
+      </TabsContent>
+
+      <TabsContent value="analytics">
+        <InsightsChart insights={insights} />
+      </TabsContent>
+    </Tabs>
   );
 };
 
