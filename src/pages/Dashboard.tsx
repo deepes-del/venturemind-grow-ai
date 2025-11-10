@@ -74,53 +74,59 @@ const Dashboard = () => {
 
   return (
     <div className="min-h-screen relative" style={{ background: 'var(--gradient-mesh), linear-gradient(to bottom right, hsl(var(--background)), hsl(var(--background)))' }}>
-      <nav className="border-b glass-effect sticky top-0 z-10 shadow-lg">
+      <nav className="border-b glass-effect sticky top-0 z-10 shadow-sm backdrop-blur-md">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Sparkles className="h-6 w-6 text-primary animate-float" />
-            <h1 className="text-2xl font-bold bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent animate-gradient">
+          <div className="flex items-center gap-3">
+            <Sparkles className="h-6 w-6 text-primary" />
+            <span className="text-2xl font-bold" style={{ color: 'hsl(var(--heading-primary))' }}>
               AutoGrow
-            </h1>
+            </span>
           </div>
           <div className="flex items-center gap-4">
             <div className="text-right">
-              <p className="text-sm font-medium">{profile?.business_name}</p>
-              <p className="text-xs text-muted-foreground">{profile?.owner_name}</p>
+              <p className="text-sm font-semibold" style={{ color: 'hsl(var(--heading-secondary))' }}>
+                {profile?.business_name}
+              </p>
+              <p className="text-xs" style={{ color: 'hsl(var(--text-secondary))' }}>
+                {profile?.owner_name}
+              </p>
             </div>
-            <Button variant="outline" size="sm" onClick={handleLogout}>
-              <LogOut className="h-4 w-4" />
+            <Button variant="outline" size="sm" onClick={handleLogout} className="hover:bg-muted">
+              <LogOut className="h-4 w-4 mr-2" />
+              Logout
             </Button>
           </div>
         </div>
       </nav>
 
-      <main className="container mx-auto px-4 py-8">
-        <div className="mb-8 animate-slide-in-up">
-          <h2 className="text-4xl font-bold mb-2 bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
-            Welcome back, {profile?.owner_name}! 👋
-          </h2>
-          <p className="text-muted-foreground text-lg">
+      <main className="container mx-auto px-4 py-10">
+        <div className="mb-10 animate-slide-in-up max-w-3xl">
+          <h1 className="mb-3 flex items-center gap-3">
+            Welcome back, {profile?.owner_name}! 
+            <span className="inline-block animate-float">👋</span>
+          </h1>
+          <p className="text-lg leading-relaxed" style={{ color: 'hsl(var(--text-secondary))' }}>
             Let's analyze your business data and grow your presence on social media
           </p>
         </div>
 
-        <Tabs defaultValue="upload" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-4 max-w-3xl glass-effect shadow-xl">
-            <TabsTrigger value="upload" className="gap-2">
+        <Tabs defaultValue="upload" className="space-y-8">
+          <TabsList className="grid w-full grid-cols-4 max-w-3xl bg-muted/50 p-1.5 h-auto">
+            <TabsTrigger value="upload" className="gap-2 data-[state=active]:bg-background data-[state=active]:shadow-sm">
               <Upload className="h-4 w-4" />
-              Upload Data
+              <span className="font-medium">Upload Data</span>
             </TabsTrigger>
-            <TabsTrigger value="insights" className="gap-2">
+            <TabsTrigger value="insights" className="gap-2 data-[state=active]:bg-background data-[state=active]:shadow-sm">
               <TrendingUp className="h-4 w-4" />
-              Insights
+              <span className="font-medium">Insights</span>
             </TabsTrigger>
-            <TabsTrigger value="ads" className="gap-2">
+            <TabsTrigger value="ads" className="gap-2 data-[state=active]:bg-background data-[state=active]:shadow-sm">
               <FileText className="h-4 w-4" />
-              Ad Content
+              <span className="font-medium">Ad Content</span>
             </TabsTrigger>
-            <TabsTrigger value="history" className="gap-2">
+            <TabsTrigger value="history" className="gap-2 data-[state=active]:bg-background data-[state=active]:shadow-sm">
               <FileText className="h-4 w-4" />
-              History
+              <span className="font-medium">History</span>
             </TabsTrigger>
           </TabsList>
 
@@ -137,13 +143,13 @@ const Dashboard = () => {
           </TabsContent>
 
           <TabsContent value="history" className="space-y-4 animate-scale-in">
-            <Card className="border-l-4 border-l-accent shadow-xl">
+            <Card className="border-l-4 border-l-accent shadow-sm">
               <CardHeader>
-                <CardTitle className="flex items-center gap-2">
+                <CardTitle className="flex items-center gap-3">
                   <FileText className="h-5 w-5 text-accent" />
-                  Dataset History
+                  <span style={{ color: 'hsl(var(--heading-secondary))' }}>Dataset History</span>
                 </CardTitle>
-                <CardDescription>
+                <CardDescription className="text-base mt-2">
                   View all your uploaded datasets and analysis history
                 </CardDescription>
               </CardHeader>
